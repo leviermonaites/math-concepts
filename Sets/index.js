@@ -1,43 +1,44 @@
-class Set {
-    constructor() {
-        this.elements = [];
-    }
-
-    contains(element) {
-        return this.elements.includes(element);
-    }
-
-    addElement(element) {
-        this.elements.push(element);
-        return `${element.data} added successfully!`;
-    }
-}
-
 class Element {
-    constructor(data, parent) {
-        if(!parent) {
-            throw new Error("Element must have a parent");
-        }
-        
-        this.data = data;
-        this.attachToSet(parent);
+  constructor(data, parent) {
+    if (!parent) {
+      throw new Error('Element must have a parent');
     }
-    
-    attachToSet(set) {
-        return set.addElement(this);
-    }
-    
-    // The name is just an allusion to the symbol contains, that is ∈.
-    // Since it's only about my studies in maths, there's no big problem!
-    E(set) {
-        return set.contains(this);
-    }
+
+    this.data = data;
+    this.attachToSet(parent);
+  }
+
+  attachToSet(set) {
+    return set.add(this);
+  }
+
+  // The name is just an allusion to the "is part of" symbol, that is ∈.
+  // Since it's only about my studies in maths, there's no big problem!
+  E(set) {
+    return set.has(this);
+  }
 }
+
+const union = (set1, set2, element) => set1.has(element) || set2.has(element);
+const intersection = (set1, set2, element) =>
+  set1.has(element) && set2.has(element);
+const difference = (set1, set2) =>
+  [...set1].filter((value, index) => !set2.has(value));
+const symmetricDifference = (set1, set2) => {
+  return [
+    ...[...set1].filter((value) => !set2.has(value)),
+    ...[...set2].filter((value) => !set1.has(value)),
+  ];
+};
 
 const A = new Set();
-const element1 = new Element(5, A);
+A.add(5);
+A.add(8);
 
 const B = new Set();
+B.add(8);
 
-B.elements.push('dd');
-console.log(B);
+const element = new Element(3, A);
+element.attachToSet(B);
+
+console.log(symmetricDifference(A, B));
