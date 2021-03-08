@@ -24,12 +24,11 @@ const intersection = (set1, set2, element) =>
   set1.has(element) && set2.has(element);
 const difference = (set1, set2) =>
   [...set1].filter((value, index) => !set2.has(value));
-const symmetricDifference = (set1, set2) => {
-  return [
-    ...[...set1].filter((value) => !set2.has(value)),
-    ...[...set2].filter((value) => !set1.has(value)),
-  ];
-};
+
+const symmetricDifference = (set1, set2) => [
+  ...difference(set1, set2),
+  ...difference(set2, set1),
+];
 
 const A = new Set();
 A.add(5);
