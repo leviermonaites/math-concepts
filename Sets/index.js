@@ -20,8 +20,8 @@ class Element {
 }
 
 const union = (set1, set2, element) => set1.has(element) || set2.has(element);
-const intersection = (set1, set2, element) =>
-  set1.has(element) && set2.has(element);
+const intersection = (set1, set2) =>
+  set1.filter((element) => set2.has(element));
 const difference = (set1, set2) =>
   [...set1].filter((value, index) => !set2.has(value));
 
